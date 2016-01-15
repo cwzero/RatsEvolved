@@ -1,8 +1,8 @@
 package com.liquidforte.rats
 
-import java.util.Random;
+import java.util.Random
 
-class Player {
+class Player extends Entity {
 	static Random random = new Random()
 	static int[] MAX_HEALTH = [20, 25, 30, 35, 40]
 	int health = MAX_HEALTH[0]
@@ -22,15 +22,39 @@ class Player {
 	
 	int experience = 0
 	int level = 0
+	int[] damageReduction = [0, 1, 2, 3, 4]
 	
-	int getDamage() {
-		return MIN_DAMAGE[level] + random.nextInt(MAX_DAMAGE[level] - MIN_DAMAGE[level])
+	Armor armor = null
+	Weapon weapon = null
+	
+	Armor getArmor() {
+		return armor
+	}
+	
+	Weapon getWeapon() {
+		return weapon
+	}
+	
+	int getMaxHealth() {
+		return MAX_HEALTH[level] + armor.getBonusHealth()
+	}
+	
+	int getMinDamage() {
+		return MIN_DAMAGE[level] + getWeapon().getMinDamage()
+	}
+	
+	int getMaxDamage() {
+		return MAX_DAMAGE[level] + getWeapon().getMaxDamage()
+	}
+	
+	int getDamageReduction() {
+		return damageReduction[level] + armor.getDamageReduction()
 	}
 
 	void usePotion() {
 		if (potions >= 1) {
 			potions--
-			health = MAX_HEALTH[level]
+			health = getMaxHealth()
 			println('You drink a potion, restoring your health to maximum.')
 		} else {
 			println('You don\'t have any potions to drink.')
@@ -43,6 +67,6 @@ class Player {
 		gems = 0
 		potions = 0
 		deaths++
-		health = MAX_HEALTH[level]
+		health = getMaxHealth()
 	}
 }

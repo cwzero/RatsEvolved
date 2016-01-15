@@ -2,7 +2,7 @@ package com.liquidforte.rats
 
 import java.util.Random;
 
-class Rat {
+class Rat extends Enemy {
 	static Random random = new Random()
 	static int MAX_HEALTH = 5
 	int health = MAX_HEALTH
@@ -19,8 +19,16 @@ class Rat {
 	static int MIN_EXP = 1
 	static int MAX_EXP = 5
 	
-	int getDamage() {
-		return MIN_DAMAGE + random.nextInt(MAX_DAMAGE - MIN_DAMAGE)
+	int getMaxHealth() {
+		return MAX_HEALTH
+	}
+	
+	int getMinDamage() {
+		return MIN_DAMAGE
+	}
+	
+	int getMaxDamage() {
+		return MAX_DAMAGE
 	}
 	
 	int getGold() {
